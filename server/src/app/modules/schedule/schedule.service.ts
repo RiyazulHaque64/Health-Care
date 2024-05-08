@@ -5,6 +5,12 @@ import pagination from "../../helper/pagination";
 import prisma from "../../shared/prisma";
 import { TScheduleInput } from "./schedule.interface";
 
+const converTimeToUTC = (date: Date) => {
+  const offset = date.getTimezoneOffset() * 60000;
+  const convertedTime = new Date(date.getTime() + offset);
+  return convertedTime;
+};
+
 const createScheduleIntoDB = async (
   data: TScheduleInput
 ): Promise<Schedule[]> => {
@@ -35,8 +41,10 @@ const createScheduleIntoDB = async (
     );
     while (startTimeOfTheDay < endTimeOfTheDay) {
       const schedule = {
-        startDateTime: startTimeOfTheDay,
-        endDateTime: addMinutes(startTimeOfTheDay, intervalTime),
+        startDateTime: converTimeToUTC(startTimeOfTheDay),
+        endDateTime: converTimeToUTC(
+          addMinutes(startTimeOfTheDay, intervalTime)
+        ),
       };
       startTimeOfTheDay = addMinutes(startTimeOfTheDay, intervalTime);
       const isExistsSchedule = await prisma.schedule.findFirst({
