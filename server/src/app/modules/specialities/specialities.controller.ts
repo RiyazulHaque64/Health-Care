@@ -19,7 +19,8 @@ const getAllSpecialities = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: "Specialities retrieved successfully",
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 

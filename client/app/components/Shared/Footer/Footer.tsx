@@ -30,7 +30,7 @@ const Footer = () => {
         <Image src={facebookIcon} alt="Facebook" width={30} height={30} />
         <Image src={facebookIcon} alt="Facebook" width={30} height={30} />
       </Stack>
-      <div className="border-b border-dashed"></div>
+      <Box sx={{ border: "1px dashed gray" }}></Box>
       <Container>
         <Stack
           direction="row"

@@ -11,7 +11,7 @@ router.get("/", SpecialitiesControllers.getAllSpecialities);
 
 router.post(
   "/",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = SpecialitiesValidations.insertSpecialitiesValidationSchema.parse(

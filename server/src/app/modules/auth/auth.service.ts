@@ -25,6 +25,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
   }
 
   const jwtPayload = {
+    userId: userData.id,
     email: userData.email,
     role: userData.role,
   };
@@ -67,6 +68,7 @@ const getAccessToken = async (token: string) => {
   });
 
   const jwtPayload = {
+    userId: userData.id,
     email: userData.email,
     role: userData.role,
   };
@@ -124,6 +126,7 @@ const forgotPassword = async (payload: { email: string }) => {
   });
 
   const jwtPayload = {
+    userId: userData.id,
     email: userData.email,
     role: userData.role,
   };
