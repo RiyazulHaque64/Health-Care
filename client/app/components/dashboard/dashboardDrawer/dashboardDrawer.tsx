@@ -1,6 +1,10 @@
 "use client";
 
+import { useGetSingleUserQuery } from "@/app/redux/api/userApi";
+import { removeUserInfo } from "@/app/services/auth.service";
 import MenuIcon from "@mui/icons-material/Menu";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import { Avatar, Badge, Menu, MenuItem, Stack } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,6 +12,7 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import SideBar from "../sidebar/SideBar";
 
@@ -20,6 +25,11 @@ export default function DashboardDrawer({
 }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
+  const { data: userInfo, isLoading } = useGetSingleUserQuery({});
+  const router = useRouter();
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -34,6 +44,20 @@ export default function DashboardDrawer({
     if (!isClosing) {
       setMobileOpen(!mobileOpen);
     }
+  };
+
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    handleCloseUserMenu();
+    removeUserInfo();
+    router.push("/login");
   };
 
   return (
@@ -57,8 +81,46 @@ export default function DashboardDrawer({
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Hi, Riyazul Haque
+            Hi, {isLoading ? "Loading..." : userInfo?.name}
           </Typography>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="end"
+            flex={1}
+            gap={2}
+          >
+            <Badge badgeContent={1} color="primary">
+              <IconButton sx={{ backgroundColor: "#ffffff" }}>
+                <NotificationsNoneIcon color="action" />
+              </IconButton>
+            </Badge>
+            <Avatar
+              src={userInfo?.profilePhoto}
+              alt={userInfo?.name}
+              onClick={handleOpenUserMenu}
+            />
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              <MenuItem onClick={handleLogout}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
+            </Menu>
+          </Stack>
         </Toolbar>
       </AppBar>
       <Box

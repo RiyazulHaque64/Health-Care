@@ -3,7 +3,9 @@ const convertPayloadToFormData = (values: any) => {
   const stringifiedVlaues = JSON.stringify(data);
   const formData = new FormData();
   formData.append("data", stringifiedVlaues);
-  formData.append("file", icon);
+  if (icon) {
+    formData.append("file", icon);
+  }
   return formData;
 };
 

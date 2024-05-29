@@ -92,7 +92,6 @@ const changePasswordIntoDB = async (user: any, payload: any) => {
       status: UserStatus.ACTIVE,
     },
   });
-  console.log(userData);
   const isCorrectPassword: boolean = await bcrypt.compare(
     payload.oldPassword,
     userData.password

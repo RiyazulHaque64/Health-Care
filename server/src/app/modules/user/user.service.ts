@@ -247,7 +247,6 @@ const getProfileFromDB = async (user: JwtPayload) => {
 const updateMyProfileIntoDB = async (req: Request, user: JwtPayload) => {
   const file = req.file;
   const data = req.body;
-  console.log(data);
 
   if (file) {
     const cloudinaryResponse = await fileUploader.uploadToCloudinary(file);

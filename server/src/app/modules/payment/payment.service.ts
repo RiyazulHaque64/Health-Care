@@ -42,7 +42,6 @@ const validatePayment = async (query: any) => {
   //   const validatePayment = await SSLServices.validatePaymentFromSSL(query);
 
   const validatePayment = query;
-  console.log(query);
 
   await prisma.$transaction(async (transactionClient) => {
     const paymentData = await transactionClient.payment.update({

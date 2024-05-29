@@ -7,7 +7,7 @@ const router = Router();
 
 router.get(
   "/",
-  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   doctorControllers.getAllDoctor
 );
 
@@ -24,7 +24,7 @@ router.patch(
 );
 
 router.delete(
-  "/:id",
+  "/soft/:id",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
   doctorControllers.deleteDoctor
 );

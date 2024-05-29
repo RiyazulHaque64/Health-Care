@@ -80,7 +80,7 @@ const SpecialtiesPage = () => {
         {isLoading ? (
           <Typography variant="h6">Loading....</Typography>
         ) : data?.length > 0 ? (
-          <DataGrid rows={data} columns={columns} />
+          <DataGrid rows={data} columns={columns} hideFooter={true} />
         ) : (
           <Typography variant="h6" sx={{ color: "#f44336" }}>
             There was an error

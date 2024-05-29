@@ -1,5 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { authKey } from "../constants/authKey";
+import { instance as axiosInstance } from "../helpers/axios/axiosInstance";
 import {
   getToLocalStorage,
   removeToLocalStorage,
@@ -30,4 +31,17 @@ export const isLoggedIn = () => {
   if (token) {
     return !!token;
   }
+};
+
+export const getNewAccessToken = async () => {
+  const res = await axiosInstance({
+    url: "http://localhost:5001/api/v1/auth/access-token",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  });
+
+  return res;
 };

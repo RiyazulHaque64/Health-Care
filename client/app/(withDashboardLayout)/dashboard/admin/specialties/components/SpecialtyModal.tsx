@@ -22,7 +22,6 @@ const SpecialtyModal = ({ open, setOpen }: TProps) => {
     console.dir(convertedData, { depth: Infinity });
     try {
       const res = await createSpecialities(convertedData).unwrap();
-      console.log(res);
       if (res?.success) {
         toast.success("Specialty created successfully");
         setOpen(false);

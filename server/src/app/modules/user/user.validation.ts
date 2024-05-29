@@ -34,7 +34,7 @@ const createDoctorValidationSchema = z.object({
       required_error: "Current working place is required",
     }),
     designation: z.string({ required_error: "Designation is required" }),
-    averageRating: z.number(),
+    averageRating: z.number().optional(),
   }),
 });
 

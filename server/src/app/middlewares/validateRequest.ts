@@ -9,7 +9,6 @@ const validateRequest = (schema: AnyZodObject) => {
       });
       next();
     } catch (error) {
-      console.log("Error hoyece");
       next(error);
     }
   };

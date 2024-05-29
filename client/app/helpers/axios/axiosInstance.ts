@@ -1,6 +1,10 @@
 import { authKey } from "@/app/constants/authKey";
+import { getNewAccessToken } from "@/app/services/auth.service";
 import { TGenericErrorResponse, TResponseSuccess } from "@/app/types";
-import { getToLocalStorage } from "@/app/utils/local-storage";
+import {
+  getToLocalStorage,
+  setToLocalStorage,
+} from "@/app/utils/local-storage";
 import axios from "axios";
 
 const instance = axios.create();
@@ -31,7 +35,17 @@ instance.interceptors.response.use(
     };
     return responseObject;
   },
-  function (error) {
+  async function (error) {
+    const { config } = error;
+    if (error?.response?.data?.message === "jwt expired" && !config.sent) {
+      config.sent = true;
+      const res = await getNewAccessToken();
+      const accessToken = res?.data?.accessToken;
+      setToLocalStorage(authKey, accessToken);
+      config.headers["Authorization"] = accessToken;
+
+      return instance(config);
+    }
     const responseObject: TGenericErrorResponse = {
       statusCode: error?.response?.data?.statusCode || 500,
       message: error?.response?.data?.message || "Something went wrong!",

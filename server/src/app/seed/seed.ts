@@ -31,7 +31,6 @@ const seedSuperAdmin = async () => {
         status: true,
       },
     });
-    console.log({ superAdmin });
   }
   prisma.$disconnect();
 };
