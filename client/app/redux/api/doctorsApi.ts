@@ -30,6 +30,21 @@ const doctorsApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.doctors],
     }),
+    getSingleDoctor: build.query({
+      query: (id) => ({
+        url: `/doctor/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.doctors],
+    }),
+    updateDoctor: build.mutation({
+      query: (payload) => ({
+        url: `/doctor/${payload.id}`,
+        method: "PATCH",
+        data: payload.data,
+      }),
+      invalidatesTags: [tagTypes.doctors],
+    }),
     deleteDoctor: build.mutation({
       query: (id) => ({
         url: `/doctor/soft/${id}`,
@@ -43,5 +58,7 @@ const doctorsApi = baseApi.injectEndpoints({
 export const {
   useCreateDoctorMutation,
   useGetAllDoctorsQuery,
+  useGetSingleDoctorQuery,
+  useUpdateDoctorMutation,
   useDeleteDoctorMutation,
 } = doctorsApi;

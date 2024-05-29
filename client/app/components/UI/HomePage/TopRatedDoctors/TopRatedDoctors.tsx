@@ -14,6 +14,7 @@ import Image from "next/image";
 const TopRatedDoctors = async () => {
   const res = await fetch("http://localhost:5001/api/v1/doctor?page=1&limit=3");
   const { data: doctors } = await res.json();
+  console.log(doctors);
   return (
     <Box
       sx={{
@@ -34,7 +35,7 @@ const TopRatedDoctors = async () => {
       </Box>
       <Container sx={{ margin: "30px auto" }}>
         <Grid container spacing={2}>
-          {doctors.map((doctor: any) => (
+          {doctors?.map((doctor: any) => (
             <Grid item md={4} key={doctor.id}>
               <Card>
                 <Box>

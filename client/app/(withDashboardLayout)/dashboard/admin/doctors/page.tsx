@@ -6,6 +6,7 @@ import {
 } from "@/app/redux/api/doctorsApi";
 import { useDebounced } from "@/app/redux/hooks";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   Box,
   Button,
@@ -15,6 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import DoctorModal from "./components/DoctorModal";
@@ -67,12 +69,20 @@ const DoctorsPage = () => {
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => (
-        <IconButton
-          aria-label="delete"
-          onClick={() => handleSpecialtyDelete(row.id)}
-        >
-          <DeleteIcon />
-        </IconButton>
+        <Box>
+          <IconButton
+            aria-label="delete"
+            onClick={() => handleSpecialtyDelete(row.id)}
+            sx={{ color: "red" }}
+          >
+            <DeleteIcon />
+          </IconButton>
+          <Link href={`/dashboard/admin/doctors/edit/${row.id}`}>
+            <IconButton aria-label="edit">
+              <EditIcon />
+            </IconButton>
+          </Link>
+        </Box>
       ),
     },
   ];
